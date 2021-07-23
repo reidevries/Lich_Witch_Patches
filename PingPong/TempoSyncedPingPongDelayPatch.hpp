@@ -173,6 +173,7 @@ class TempoSyncedPingPongDelayPatch : public Patch
 		AudioBuffer buffer_clone = AudioBuffer::create(buffer.getChannels(), buffer.getSize());
 		buffer.copyTo(buffer_clone);
         lowpass->process(buffer_clone, buffer);
+		AudioBuffer::destroy(buffer_clone);
         left.tanh();
         right.tanh();
         delayL = newDelayL;
