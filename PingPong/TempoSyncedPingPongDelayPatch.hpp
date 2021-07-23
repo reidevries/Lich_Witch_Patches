@@ -170,7 +170,8 @@ class TempoSyncedPingPongDelayPatch : public Patch
             left[n] = ldly * wet + left[n] * dry;
             right[n] = rdly * wet + right[n] * dry;
         }
-		AudioBuffer buffer_clone = buffer;
+		AudioBuffer buffer_clone;
+		buffer.copyTo(buffer_clone);
         lowpass->process(buffer_clone, buffer);
         left.tanh();
         right.tanh();
