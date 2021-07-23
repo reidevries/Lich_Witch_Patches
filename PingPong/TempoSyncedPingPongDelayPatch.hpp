@@ -171,7 +171,7 @@ class TempoSyncedPingPongDelayPatch : public Patch
             right[n] = rdly * wet + right[n] * dry;
         }
 
-        lowpass->process(buffer);
+        lowpass->process(buffer, buffer);
         left.tanh();
         right.tanh();
         delayL = newDelayL;
