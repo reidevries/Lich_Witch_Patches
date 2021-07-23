@@ -93,7 +93,7 @@ class TempoSyncedPingPongDelayPatch : public Patch
         lowpass = StereoBiquadFilter::create(1);
         lowpass->setLowPass(
           18000 / (getSampleRate() / 2), FilterStage::BUTTERWORTH_Q);
-        lfo1 = RampOscillator::create(getSampleRate() / getBlockSize());
+        lfo1 = RampOscillator<RAMP_SHAPE>::create(getSampleRate() / getBlockSize());
         lfo2 = SineOscillator::create(getSampleRate() / getBlockSize());
     }
 
@@ -102,7 +102,7 @@ class TempoSyncedPingPongDelayPatch : public Patch
         CircularBuffer::destroy(delayBufferL);
         CircularBuffer::destroy(delayBufferR);
         StereoBiquadFilter::destroy(lowpass);
-        RampOscillator::destroy(lfo1);
+        RampOscillator<RAMP_SHAPE>::destroy(lfo1);
         SineOscillator::destroy(lfo2);
     }
 
