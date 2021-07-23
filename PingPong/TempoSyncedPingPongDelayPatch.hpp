@@ -153,9 +153,9 @@ class TempoSyncedPingPongDelayPatch : public Patch
 
         float wet = getParameterValue(PARAMETER_D);
         float dry = 1.0 - wet;
+        dc.process(buffer); // remove DC offset
         FloatArray left = buffer.getSamples(LEFT_CHANNEL);
         FloatArray right = buffer.getSamples(RIGHT_CHANNEL);
-        dc.process(buffer); // remove DC offset
 							//
         for (int n = 0; n < size; n++) {
             float x1 = n / (float)size;
@@ -170,8 +170,8 @@ class TempoSyncedPingPongDelayPatch : public Patch
             left[n] = ldly * wet + left[n] * dry;
             right[n] = rdly * wet + right[n] * dry;
         }
-
-        lowpass->process(buffer, buffer);
+		AudioBuffer buffer_clone = buffer;
+        lowpass->process(buffer_clone, buffer);
         left.tanh();
         right.tanh();
         delayL = newDelayL;
